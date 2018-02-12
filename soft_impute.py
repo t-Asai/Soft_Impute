@@ -2,6 +2,7 @@
 import numpy as np
 import random
 from matrix_class import Matrix
+import random
 
 
 def soft_threshold(s, Lambda):
@@ -30,3 +31,31 @@ def soft_impute():
                 if(A2[i, j] != 0):
                     A3[i, j] = A2[i, j]
         M.cal_error(A0, A3)
+
+
+def split_to_test_and_train(X, rate):
+    List = []
+    for i in range(X.shape[0]):
+        for j in range(X.shape[1]):
+            if X[i, j] != 0:
+                List.append([i, j])
+
+    R_train = np.zeros(X.shape)
+    R_test = np.zeros(X.shape)
+    random.shuffle(List)
+    for l in range(len(List)):
+        elem = List[l]
+        i = elem[0]
+        j = elem[1]
+        if l < len(List) * rate:
+            R_train[i, j] = 1.0
+        else:
+            R_test[i, j] = 1.0
+    return R_train, R_test
+
+
+if __name__ == '__main__':
+    A = np.random.random((10, 10))
+    R_train, R_test = split_to_test_and_train(A, 0.1)
+    print(R_train)
+    print(R_test)
