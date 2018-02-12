@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import random
-from matrix_class import Matrix
 import random
 
 
