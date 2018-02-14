@@ -1,18 +1,19 @@
 import numpy as np
 
 
-def warm_start(Y, X_train, Lambda):
+def warm_start(Y, X_train, s_Lambda, r_Lambda, e_Lambda, stop_condition):
     """
     Soft_Imputeをcold startさせないための方法
     """
     X_k = np.zeros(X_train.shape)
-    while(Lambda > 0.01):
-        X_k, error = soft_impute(Y, X_k, X_train, Lambda)
+    Lambda = s_Lambda
+    while(Lambda > e_Lambda):
+        X_k, error = soft_impute(Y, X_k, X_train, Lambda, stop_condition)
         print(Lambda, error)
-        Lambda *= 0.9
+        Lambda *= r_Lambda
 
 
-def soft_impute(Y, X_k, X_train, Lambda):
+def soft_impute(Y, X_k, X_train, Lambda, stop_condition):
     """
     アルゴリズムのメイン
     """
@@ -29,7 +30,7 @@ def soft_impute(Y, X_k, X_train, Lambda):
                     X_k[i, j] = Y[i, j]
         error = np.linalg.norm(X_k - X_train) / np.linalg.norm(X_train)
         print(error, end='\r')
-        if abs(error - _error) < 0.1:
+        if abs(error - _error) < stop_condition:
             break
         else:
             _error = error
