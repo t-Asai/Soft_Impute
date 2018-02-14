@@ -2,6 +2,9 @@ import make_matrix
 from methods import warm_start
 
 if __name__ == "__main__":
+    """
+    メインの関数
+    """
     N = 500
     Lambda = pow(10, 2)
 

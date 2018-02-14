@@ -3,6 +3,12 @@ import random
 
 
 def split_to_test_and_train(X, rate):
+    """
+    再構成がうまく出来ているかどうかを調べるために、訓練データとテストデータに分ける
+    0の値は0を観測したのか観測できなかったのかの判断が面倒なので、
+    この実装では0は観測できなかったとみなす。
+    よって、比較するためには非ゼロの値を分離して比較する必要がある。
+    """
     List = []
     for i in range(X.shape[0]):
         for j in range(X.shape[1]):
@@ -23,6 +29,11 @@ def split_to_test_and_train(X, rate):
 
 
 def make_sampling_matrix(X, rate):
+    """
+    観測行列を作成する関数
+    テスト用にとっておいた部分は、観測できなかったことにする
+    rateの意味は、本来観測できたであろう部分から、もっと差っ引きたかったら1より小さくすればいい
+    """
     R = np.zeros(X.shape)
     for i in range(X.shape[0]):
         for j in range(X.shape[1]):
@@ -32,6 +43,9 @@ def make_sampling_matrix(X, rate):
 
 
 def make_target_matrix(N):
+    """
+    アルゴリズムが正しいかどうかを調べるために、低ランクな行列を作成する関数
+    """
     X0 = np.random.random((N, N))
     U, S, V = np.linalg.svd(X0, full_matrices=True)
     S_ = np.array([s if i < 0.1 * N else 0 for i, s in enumerate(S)])

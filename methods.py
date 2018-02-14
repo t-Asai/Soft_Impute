@@ -2,6 +2,9 @@ import numpy as np
 
 
 def warm_start(Y, X_train, Lambda):
+    """
+    Soft_Imputeをcold startさせないための方法
+    """
     X_k = np.zeros(X_train.shape)
     while(Lambda > 0.01):
         X_k, error = soft_impute(Y, X_k, X_train, Lambda)
@@ -10,6 +13,9 @@ def warm_start(Y, X_train, Lambda):
 
 
 def soft_impute(Y, X_k, X_train, Lambda):
+    """
+    アルゴリズムのメイン
+    """
     error = 0.0
     _error = 0.0
     while(1):
@@ -31,6 +37,9 @@ def soft_impute(Y, X_k, X_train, Lambda):
 
 
 def soft_threshold(s, Lambda):
+    """
+    弱閾値関数
+    """
     if abs(s) <= Lambda:
         return 0.0
     elif s > 0:
