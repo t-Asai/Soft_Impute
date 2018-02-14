@@ -1,5 +1,5 @@
 import make_matrix
-from methods import warm_start
+from methods import warm_start, cal_test_error
 
 if __name__ == "__main__":
     """
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     e_Lambda = 0.01
     rho = 0.1
     under_sampling_rate = 0.8
-    test_train_ratio = 1.0
+    test_train_ratio = 0.7
     stop_condition = 0.1
 
     X0 = make_matrix.make_target_matrix(N, rho)
@@ -19,4 +19,6 @@ if __name__ == "__main__":
     R = make_matrix.make_sampling_matrix(X_test, under_sampling_rate)
 
     Y = R * X_train
-    warm_start(Y, X_train, s_Lambda, r_Lambda, e_Lambda, stop_condition)
+    X_k = warm_start(Y, X_train, X_test, s_Lambda,
+                     r_Lambda, e_Lambda, stop_condition)
+    cal_test_error(X_k, X_test)
