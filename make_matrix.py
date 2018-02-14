@@ -12,11 +12,10 @@ def split_to_test_and_train(X, rate):
     X_train = np.zeros(X.shape)
     X_test = np.zeros(X.shape)
     random.shuffle(List)
-    for l in range(len(List)):
-        elem = List[l]
+    for e, elem in enumerate(List):
         i = elem[0]
         j = elem[1]
-        if l < len(List) * rate:
+        if e < len(List) * rate:
             X_train[i, j] = X[i, j]
         else:
             X_test[i, j] = X[i, j]
