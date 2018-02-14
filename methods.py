@@ -32,7 +32,7 @@ def soft_impute(Y, X_k, X_train, Lambda):
 
 def soft_threshold(s, Lambda):
     if abs(s) <= Lambda:
-        return 0
+        return 0.0
     elif s > 0:
         return s - Lambda
     else:
