@@ -1,6 +1,6 @@
 import make_matrix
 from methods import warm_start, cal_test_error, to_square_matrix, to_low_rank_matrix
-import numpy as np
+import pandas as pd
 
 
 if __name__ == "__main__":
@@ -20,10 +20,9 @@ if __name__ == "__main__":
     """
     X0 = make_matrix.make_target_matrix(N, rho)
     """
-    X0 = np.random.random((40, 500))
+    X0 = pd.read_csv('data.csv')
 
     X0 = to_square_matrix(X0)
-    print(X0.shape)
     X0 = to_low_rank_matrix(X0, rho)
 
     X_train, X_test = make_matrix.split_to_test_and_train(X0, test_train_ratio)
