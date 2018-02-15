@@ -10,9 +10,9 @@ if __name__ == "__main__":
     r_Lambda = 0.9
     e_Lambda = 0.01
     rho = 0.1
-    under_sampling_rate = 0.8
+    under_sampling_rate = 0.7
     test_train_ratio = 0.7
-    stop_condition = 0.1
+    stop_condition = pow(10, -1)
 
     X0 = make_matrix.make_target_matrix(N, rho)
     X_train, X_test = make_matrix.split_to_test_and_train(X0, test_train_ratio)

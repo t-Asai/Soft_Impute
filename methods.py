@@ -22,6 +22,7 @@ def soft_impute(Y, X_k, X_train, X_test, Lambda, stop_condition):
     error = 0.0
     _error = 0.0
     while(1):
+        X_p = X_k
         U, S, V = np.linalg.svd(X_k, full_matrices=True)
         S_ = np.array([soft_threshold(s, Lambda) for s in S])
         # print(S, S2)
@@ -33,7 +34,7 @@ def soft_impute(Y, X_k, X_train, X_test, Lambda, stop_condition):
         error = np.linalg.norm(X_k - X_train) / np.linalg.norm(X_train)
         print(error, end='\r')
         cal_test_error(X_k, X_test)
-        if abs(error - _error) < stop_condition:
+        if cal_terminal_condition(X_k, X_p) < stop_condition:
             break
         else:
             _error = error
@@ -61,3 +62,9 @@ def cal_test_error(X_k, X_test):
     error /= np.linalg.norm(X_test)
     # print('test_error: {}'.format(error))
     return error
+
+
+def cal_terminal_condition(X_k, X_p):
+    num = np.linalg.norm(X_k - X_p)
+    den = np.linalg.norm(X_p)
+    return num / den if den > 0 else 0.0
