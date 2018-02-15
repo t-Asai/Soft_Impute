@@ -8,7 +8,7 @@ if __name__ == "__main__":
     N = 500
     s_Lambda = pow(10, 2)
     r_Lambda = 0.9
-    e_Lambda = 0.01
+    e_Lambda = pow(10, -5)
     rho = 0.1
     under_sampling_rate = 0.7
     test_train_ratio = 0.7

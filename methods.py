@@ -31,7 +31,8 @@ def soft_impute(Y, X_k, X_train, X_test, Lambda, stop_condition):
             for j in range(Y.shape[1]):
                 if(Y[i, j] != 0):
                     X_k[i, j] = Y[i, j]
-        error = np.linalg.norm(X_k - X_train) / np.linalg.norm(X_train)
+        error = np.linalg.norm(X_k - X_train - X_test) / \
+            np.linalg.norm(X_train)
         print(error, end='\r')
         cal_test_error(X_k, X_test)
         if cal_terminal_condition(X_k, X_p) < stop_condition:
