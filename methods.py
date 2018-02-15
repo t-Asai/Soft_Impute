@@ -8,19 +8,20 @@ def warm_start(Y, X_train, X_test, s_Lambda, r_Lambda, e_Lambda, stop_condition)
     X_k = np.zeros(X_train.shape)
     Lambda = s_Lambda
     while(Lambda > e_Lambda):
-        X_k, error = soft_impute(
-            Y, X_k, X_train, X_test, Lambda, stop_condition)
-        print(Lambda, error)
+        X_k = soft_impute(
+            Y, X_k, X_train, Lambda, stop_condition)
+        total_error = cal_total_error(X_k, X_train, X_test)
+        error = cal_test_error(X_k, X_test)
+        print('Lambda: {:.3g}, total_error: {:.3g}, test_error: {:.3g}'.format(
+            Lambda, total_error, error))
         Lambda *= r_Lambda
     return X_k
 
 
-def soft_impute(Y, X_k, X_train, X_test, Lambda, stop_condition):
+def soft_impute(Y, X_k, X_train, Lambda, stop_condition):
     """
     アルゴリズムのメイン
     """
-    error = 0.0
-    _error = 0.0
     while(1):
         X_p = X_k
         U, S, V = np.linalg.svd(X_k, full_matrices=True)
@@ -31,16 +32,10 @@ def soft_impute(Y, X_k, X_train, X_test, Lambda, stop_condition):
             for j in range(Y.shape[1]):
                 if(Y[i, j] != 0):
                     X_k[i, j] = Y[i, j]
-        error = np.linalg.norm(X_k - X_train - X_test) / \
-            np.linalg.norm(X_train)
-        print(error, end='\r')
-        cal_test_error(X_k, X_test)
+
         if cal_terminal_condition(X_k, X_p) < stop_condition:
             break
-        else:
-            _error = error
-
-    return X_k, error
+    return X_k
 
 
 def soft_threshold(s, Lambda):
@@ -55,6 +50,11 @@ def soft_threshold(s, Lambda):
         return s + Lambda
 
 
+def cal_total_error(X_k, X_train, X_test):
+    error = np.linalg.norm(X_k - X_train - X_test) / np.linalg.norm(X_train)
+    return error
+
+
 def cal_test_error(X_k, X_test):
     error = 0.0
     for i in range(X_test.shape[0]):
@@ -62,7 +62,6 @@ def cal_test_error(X_k, X_test):
             if X_test[i, j] != 0:
                 error += pow(X_test[i, j] - X_k[i, j], 2.0)
     error /= np.linalg.norm(X_test)
-    # print('test_error: {}'.format(error))
     return error
 
 

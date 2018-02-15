@@ -10,7 +10,7 @@ if __name__ == "__main__":
     r_Lambda = 0.9
     e_Lambda = pow(10, -5)
     rho = 0.1
-    under_sampling_rate = 0.7
+    under_sampling_rate = 1.0
     test_train_ratio = 0.7
     stop_condition = pow(10, -1)
 
