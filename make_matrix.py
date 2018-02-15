@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from methods import to_low_rank_matrix
+from methods_matrix import to_low_rank_matrix
 
 
 def split_to_test_and_train(X, rate):

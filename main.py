@@ -1,5 +1,6 @@
 import make_matrix
-from methods import warm_start, to_square_matrix, to_low_rank_matrix
+from methods_algorithm import warm_start
+from methods_matrix import to_square_matrix, to_low_rank_matrix
 import pandas as pd
 
 
