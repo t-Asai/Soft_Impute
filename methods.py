@@ -38,6 +38,7 @@ def soft_impute(Y, X_k, X_train, X_test, Lambda, stop_condition):
             break
         else:
             _error = error
+
     return X_k, error
 
 
