@@ -1,5 +1,6 @@
 import numpy as np
 import random
+from methods import to_low_rank_matrix
 
 
 def split_to_test_and_train(X, rate):
@@ -47,7 +48,5 @@ def make_target_matrix(N, rho):
     アルゴリズムが正しいかどうかを調べるために、低ランクな行列を作成する関数
     """
     X0 = np.random.random((N, N))
-    U, S, V = np.linalg.svd(X0, full_matrices=True)
-    S_ = np.array([s if i < rho * N else 0 for i, s in enumerate(S)])
-    X0 = np.dot(np.dot(U, np.diag(S_)), V)
+    X0 = to_low_rank_matrix(X0, rho)
     return X0

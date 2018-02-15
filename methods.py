@@ -11,9 +11,9 @@ def warm_start(Y, X_train, X_test, s_Lambda, r_Lambda, e_Lambda, stop_condition)
         X_k = soft_impute(
             Y, X_k, X_train, Lambda, stop_condition)
         total_error = cal_total_error(X_k, X_train, X_test)
-        error = cal_test_error(X_k, X_test)
+        test_error = cal_test_error(X_k, X_test)
         print('Lambda: {:.3g}, total_error: {:.3g}, test_error: {:.3g}'.format(
-            Lambda, total_error, error))
+            Lambda, total_error, test_error))
         Lambda *= r_Lambda
     return X_k
 
@@ -51,21 +51,39 @@ def soft_threshold(s, Lambda):
 
 
 def cal_total_error(X_k, X_train, X_test):
-    error = np.linalg.norm(X_k - X_train - X_test) / np.linalg.norm(X_train)
-    return error
+    num = np.linalg.norm(X_k - X_train - X_test)
+    den = np.linalg.norm(X_train)
+    return num / den
 
 
 def cal_test_error(X_k, X_test):
-    error = 0.0
+    num = 0.0
     for i in range(X_test.shape[0]):
         for j in range(X_test.shape[1]):
             if X_test[i, j] != 0:
-                error += pow(X_test[i, j] - X_k[i, j], 2.0)
-    error /= np.linalg.norm(X_test)
-    return error
+                num += pow(X_test[i, j] - X_k[i, j], 2.0)
+    den = np.linalg.norm(X_test)
+    return num / den
 
 
 def cal_terminal_condition(X_k, X_p):
     num = np.linalg.norm(X_k - X_p)
     den = np.linalg.norm(X_p)
     return num / den if den > 0 else 0.0
+
+
+def to_square_matrix(X):
+    if X.shape[0] > X.shape[1]:
+        return np.sqrt(np.dot(X, X.T))
+    elif X.shape[0] < X.shape[1]:
+        return np.sqrt(np.dot(X.T, X))
+    else:
+        return X
+
+
+def to_low_rank_matrix(X, rho):
+    N = X.shape[0]
+    U, S, V = np.linalg.svd(X, full_matrices=True)
+    S_ = np.array([s if i < rho * N else 0 for i, s in enumerate(S)])
+    X = np.dot(np.dot(U, np.diag(S_)), V)
+    return X
