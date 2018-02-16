@@ -2,13 +2,14 @@ import make_matrix
 from methods_algorithm import warm_start
 from methods_matrix import to_square_matrix, to_low_rank_matrix
 import pandas as pd
+import numpy as np
 
 
 if __name__ == "__main__":
     """
     メインの関数
     """
-    N = 500
+    N = 100
 
     s_Lambda = pow(10, 2)
     r_Lambda = 0.9
@@ -34,5 +35,6 @@ if __name__ == "__main__":
 
     # 作成した写像行列Rによって観測が得られる
     Y = R * X_train
-    X_k = warm_start(Y, X_train, X_test, s_Lambda,
+    Y += 0.01 * np.random.normal(0, 1, X0.shape)
+    X_k = warm_start(Y, R, X_train, X_test, s_Lambda,
                      r_Lambda, e_Lambda, stop_condition)
