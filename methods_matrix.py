@@ -12,7 +12,8 @@ def to_square_matrix(X):
 
 def to_low_rank_matrix(X, rho):
     N = X.shape[0]
-    U, S, V = np.linalg.svd(X, full_matrices=True)
+    U, S, V = np.linalg.svd(X, full_matrices=False)
     S_ = np.array([s if i < rho * N else 0 for i, s in enumerate(S)])
+    print(U.shape, S.shape, V.shape)
     X = np.dot(np.dot(U, np.diag(S_)), V)
     return X

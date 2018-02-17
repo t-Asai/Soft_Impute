@@ -25,7 +25,7 @@ if __name__ == "__main__":
     X0 = pd.read_csv('data.csv')
     """
 
-    X0 = to_square_matrix(X0)
+    # X0 = to_square_matrix(X0)
     X0 = to_low_rank_matrix(X0, rho)
 
     # 評価用にデータを分ける
@@ -36,6 +36,6 @@ if __name__ == "__main__":
 
     # 作成した写像行列Rによって観測が得られる
     Y = R * X_train
-    Y += 0.01 * np.random.normal(0, 1, X0.shape)
+    Y += 0.00 * np.random.normal(0, 1, X0.shape)
     X_k = warm_start(Y, R, X_train, X_test, s_Lambda,
                      r_Lambda, e_Lambda, stop_condition)

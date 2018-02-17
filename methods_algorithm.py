@@ -24,7 +24,7 @@ def soft_impute(Y, R, X_k, Lambda, stop_condition):
     """
     while(1):
         X_p = X_k
-        U, S, V = np.linalg.svd(X_k, full_matrices=True)
+        U, S, V = np.linalg.svd(X_k, full_matrices=False)
         S_ = np.array([soft_threshold(s, Lambda) for s in S])
         # print(S, S2)
         X_k = np.dot(np.dot(U, np.diag(S_)), V)
