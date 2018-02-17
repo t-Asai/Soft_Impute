@@ -9,8 +9,7 @@ def warm_start(Y, R, X_train, X_test, s_Lambda, r_Lambda, e_Lambda, stop_conditi
     X_k = np.zeros(X_train.shape)
     Lambda = s_Lambda
     while(Lambda > e_Lambda):
-        X_k = soft_impute(
-            Y, R, X_k, X_train, Lambda, stop_condition)
+        X_k = soft_impute(Y, R, X_k, Lambda, stop_condition)
         total_error = cal_total_error(X_k, X_train, X_test)
         test_error = cal_test_error(X_k, X_test)
         print('Lambda: {:.3g}, total_error: {:.3g}, test_error: {:.3g}'.format(
@@ -19,7 +18,7 @@ def warm_start(Y, R, X_train, X_test, s_Lambda, r_Lambda, e_Lambda, stop_conditi
     return X_k
 
 
-def soft_impute(Y, R, X_k, X_train, Lambda, stop_condition):
+def soft_impute(Y, R, X_k, Lambda, stop_condition):
     """
     アルゴリズムのメイン
     """
