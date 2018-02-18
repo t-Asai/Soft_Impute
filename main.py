@@ -25,6 +25,9 @@ def SINGLE(Mat, Lambda_param):
     初期値作成
     外部からデータを入れる場合は、そのデータのサイズに合わせてパラメータを設定して
     Mat.Originalを上書きすればいけるはず
+    交差検証用に関数を書き換えているので、
+    実データでやりたい場合は、SINGLEに書いてあることを大体コピペして
+    使いまわすと良いかな
     """
     Mat.make_target_matrix()
     # Mat.Original = pd.read_csv('data.csv')
