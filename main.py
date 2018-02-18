@@ -2,12 +2,11 @@
 from collections import namedtuple
 from methods_algorithm import warm_start
 from class_matrix import Matrix
+"""
+メインの関数
+"""
 
 if __name__ == "__main__":
-
-    """
-    メインの関数
-    """
 
     """
     パラメータの設定
@@ -22,6 +21,8 @@ if __name__ == "__main__":
 
     """
     初期値作成
+    外部からデータを入れる場合は、そのデータのサイズに合わせてパラメータを設定して
+    Mat.Originalを上書きすればいけるはず
     """
     Mat.make_target_matrix()
     # Mat.Original = pd.read_csv('data.csv')

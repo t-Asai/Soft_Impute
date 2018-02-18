@@ -1,5 +1,8 @@
 import numpy as np
 import random
+"""
+問題として取り扱う行列についてのクラス
+"""
 
 
 class Matrix:
@@ -25,7 +28,7 @@ class Matrix:
 
     def make_train_and_test_matrix(self):
         """
-        再構成がうまく出来ているかどうかを調べるために、訓練データとテストデータに分ける
+        再構成がうまく出来ているかどうかを調べるために、訓練データとテストデータに分ける関数
         0の値は0を観測したのか観測できなかったのかの判断が面倒なので、
         この実装では0は観測できなかったとみなす。
         よって、比較するためには非ゼロの値を分離して比較する必要がある。
@@ -59,6 +62,9 @@ class Matrix:
                     self.Cast[i, j] = 1.0
 
     def make_observed_matrix(self):
+        """
+        観測行列とテストデータから観測値を得る関数
+        """
         self.Observe = self.Cast * self.Train
         noise_matrix = np.random.normal(0, 1, (self.N, self.M))
         self.Observe += self.noise_rate * noise_matrix
