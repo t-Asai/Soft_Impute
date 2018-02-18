@@ -11,11 +11,10 @@ def add_val(func_name, val='', flag=''):
     if flag == 'init':
         with open(func_name + '.dat', 'w') as f:
             writer = csv.writer(f, lineterminator='\n')
-            writer.writerow([])
     else:
         with open(func_name + '.dat', 'a') as f:
             writer = csv.writer(f, lineterminator='\n')
-            writer.writerow([val])
+            writer.writerow(val)
 
 
 def plot_val(func_name):
@@ -27,5 +26,18 @@ def plot_val(func_name):
     ax = df.plot()
     ax.set_xlabel('#step')
     ax.set_ylabel(func_name.replace('cal_', ''))
+    plt.savefig('{}.eps'.format(func_name))
+    plt.close()
+
+
+def plot_vals(func_name):
+    """
+    グラフを描画する
+    """
+    df = pd.read_csv(func_name + '.dat', header=None)
+    df.columns = ['test_error', 'Lambda']
+    ax = df.plot(x='test_error', y='Lambda')
+    ax.set_xlabel('Lambda')
+    ax.set_ylabel('error')
     plt.savefig('{}.eps'.format(func_name))
     plt.close()

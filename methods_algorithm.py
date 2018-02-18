@@ -1,4 +1,5 @@
 import numpy as np
+
 from methods_cal_param import cal_total_error, cal_test_error, cal_terminal_condition
 
 
@@ -26,13 +27,20 @@ def warm_start(Mat, Lambda_param, stop_condition):
     X_k = np.zeros(X_train.shape)
     Lambda = Lambda_param.start
 
-    while(Lambda > Lambda_param.end):
+    while(1):
         X_k = soft_impute(Y, R, X_k, Lambda, stop_condition)
         total_error = cal_total_error(X_k, X_Original)
         test_error = cal_test_error(X_k, X_test)
+        """
         print('Lambda: {:.3g}, total_error: {:.3g}, test_error: {:.3g}'.format(
             Lambda, total_error, test_error))
-        Lambda *= Lambda_param.ratio
+        """
+        if(Lambda == Lambda_param.end):
+            break
+        else:
+            Lambda *= Lambda_param.ratio
+            if(Lambda <= Lambda_param.end):
+                Lambda = Lambda_param.end
 
     """
     グラフの描画
@@ -41,7 +49,7 @@ def warm_start(Mat, Lambda_param, stop_condition):
     cal_test_error(flag='plot')
     cal_terminal_condition(flag='plot')
 
-    return X_k
+    return X_k, test_error, Lambda
 
 
 def soft_impute(Y, R, X_k, Lambda, stop_condition):

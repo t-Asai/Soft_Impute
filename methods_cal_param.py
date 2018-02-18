@@ -12,7 +12,7 @@ def cal_total_error(X_k='', X_Original='', flag=''):
         num = np.linalg.norm(X_k - X_Original)
         den = np.linalg.norm(X_Original)
         val = num / den
-        add_val(func_name, val)
+        add_val(func_name, [val])
         return val
 
     elif flag == 'plot':
@@ -36,7 +36,7 @@ def cal_test_error(X_k='', X_test='', flag=''):
                     num += pow(X_test[i, j] - X_k[i, j], 2.0)
         den = np.linalg.norm(X_test)
         val = np.sqrt(num) / den
-        add_val(func_name, val)
+        add_val(func_name, [val])
         return val
 
     elif flag == 'plot':
@@ -55,7 +55,7 @@ def cal_terminal_condition(X_k='', X_p='', flag=''):
         num = np.linalg.norm(X_k - X_p)
         den = np.linalg.norm(X_p)
         val = num / den if den > 0 else 0.0
-        add_val(func_name, val)
+        add_val(func_name, [val])
         return val
 
     elif flag == 'plot':
