@@ -28,3 +28,4 @@ def plot_val(func_name):
     ax.set_xlabel('#step')
     ax.set_ylabel(func_name.replace('cal_', ''))
     plt.savefig('{}.eps'.format(func_name))
+    plt.close()
