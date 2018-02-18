@@ -1,4 +1,3 @@
-import numpy as np
 import csv
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -6,6 +5,9 @@ import pandas as pd
 
 
 def add_val(func_name, val='', flag=''):
+    """
+    グラフ描画用にデータを保存する
+    """
     if flag == 'init':
         with open(func_name + '.dat', 'w') as f:
             writer = csv.writer(f, lineterminator='\n')
@@ -17,6 +19,9 @@ def add_val(func_name, val='', flag=''):
 
 
 def plot_val(func_name):
+    """
+    グラフを描画する
+    """
     df = pd.read_csv(func_name + '.dat')
     df.plot()
     plt.savefig('{}.png'.format(func_name))

@@ -17,5 +17,7 @@ methods_cal_param.py calculate parameters such as error terminal condition and s
 methods_matrix.py contains manipulation functions such as to make matrix low rank.
 
 to use gnuplot
+```
 $ brew cask install xquartz
 $ brew install gnuplot --with-aquaterm --with-x11
+```

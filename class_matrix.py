@@ -4,12 +4,13 @@ import random
 
 class Matrix:
 
-    def __init__(self, N=100, M=100, rate_dense=0.1, rate_sample=0.7, rate_train_test=0.3):
+    def __init__(self, N=100, M=100, rate_dense=0.1, rate_sample=0.7, rate_train_test=0.3, noise_rate=0.0):
         self.N = N
         self.M = M
         self.rate_dense = rate_dense
         self.rate_sample = rate_sample
         self.rate_train_test = rate_train_test
+        self.noise_rate = noise_rate
 
     def make_target_matrix(self):
         """
@@ -22,7 +23,7 @@ class Matrix:
         X = np.dot(np.dot(U, np.diag(S_)), V)
         self.Original = X
 
-    def split_to_test_and_train(self):
+    def make_train_and_test_matrix(self):
         """
         再構成がうまく出来ているかどうかを調べるために、訓練データとテストデータに分ける
         0の値は0を観測したのか観測できなかったのかの判断が面倒なので、
@@ -56,5 +57,8 @@ class Matrix:
             for j in range(self.M):
                 if self.Test[i, j] == 0 and random.random() < self.rate_sample:
                     self.Cast[i, j] = 1.0
+
+    def make_observed_matrix(self):
         self.Observe = self.Cast * self.Train
-        # self.Observe += 0.01 * np.random.normal(0, 1, (self.N, self.M))
+        noise_matrix = np.random.normal(0, 1, (self.N, self.M))
+        self.Observe += self.noise_rate * noise_matrix
