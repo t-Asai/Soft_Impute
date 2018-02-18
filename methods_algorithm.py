@@ -32,6 +32,10 @@ def soft_impute(Y, R, X_k, Lambda, stop_condition):
             for j in range(Y.shape[1]):
                 if(R[i, j] != 0):
                     X_k[i, j] = Y[i, j]
+        """
+        X_k = np.array([Y[i, j] if R[i, j] != 0 else X_k[i, j]
+                        for i in range(Y.shape[0]) for j in range(Y.shape[1])]).reshape(Y.shape)
+        """
 
         if cal_terminal_condition(X_k, X_p) < stop_condition:
             break
