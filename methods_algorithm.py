@@ -2,19 +2,19 @@ import numpy as np
 from methods_cal_param import cal_total_error, cal_test_error, cal_terminal_condition
 
 
-def warm_start(Y, R, X_train, X_test, s_Lambda, r_Lambda, e_Lambda, stop_condition):
+def warm_start(Y, R, X_train, X_test, Lambda_param, stop_condition):
     """
     Soft_Imputeをcold startさせないための方法
     """
     X_k = np.zeros(X_train.shape)
-    Lambda = s_Lambda
-    while(Lambda > e_Lambda):
+    Lambda = Lambda_param.start
+    while(Lambda > Lambda_param.end):
         X_k = soft_impute(Y, R, X_k, Lambda, stop_condition)
         total_error = cal_total_error(X_k, X_train, X_test)
         test_error = cal_test_error(X_k, X_test)
         print('Lambda: {:.3g}, total_error: {:.3g}, test_error: {:.3g}'.format(
             Lambda, total_error, test_error))
-        Lambda *= r_Lambda
+        Lambda *= Lambda_param.ratio
     return X_k
 
 
