@@ -16,7 +16,7 @@ if __name__ == "__main__":
     LAMBDA = namedtuple('LAMBDA', ('start', 'end', 'ratio'))
     Lambda_param = LAMBDA(start=pow(10, 2), end=pow(10, -5), ratio=0.9)
     rho = 0.1
-    under_sampling_rate = 0.7
+    under_sampling_rate = 0.9
     test_train_ratio = 0.8
 
     stop_condition = pow(10, -1)

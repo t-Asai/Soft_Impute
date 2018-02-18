@@ -22,23 +22,23 @@ def soft_impute(Y, R, X_k, Lambda, stop_condition):
     """
     アルゴリズムのメイン
     """
-    while(1):
+    val = stop_condition
+    N, M = Y.shape
+    while(val >= stop_condition):
         X_p = X_k
+
         U, S, V = np.linalg.svd(X_k, full_matrices=False)
         S_ = np.array([soft_threshold(s, Lambda) for s in S])
-        # print(S, S2)
         X_k = np.dot(np.dot(U, np.diag(S_)), V)
-        for i in range(Y.shape[0]):
-            for j in range(Y.shape[1]):
+        for i in range(N):
+            for j in range(M):
                 if(R[i, j] != 0):
                     X_k[i, j] = Y[i, j]
         """
         X_k = np.array([Y[i, j] if R[i, j] != 0 else X_k[i, j]
                         for i in range(Y.shape[0]) for j in range(Y.shape[1])]).reshape(Y.shape)
         """
-
-        if cal_terminal_condition(X_k, X_p) < stop_condition:
-            break
+        val = cal_terminal_condition(X_k, X_p)
     return X_k
 
 

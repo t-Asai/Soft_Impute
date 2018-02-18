@@ -11,18 +11,18 @@ def split_to_test_and_train(X, rate):
     よって、比較するためには非ゼロの値を分離して比較する必要がある。
     """
     List = []
-    for i in range(X.shape[0]):
-        for j in range(X.shape[1]):
+    N, M = X.shape
+    for i in range(N):
+        for j in range(M):
             if X[i, j] != 0:
                 List.append([i, j])
+    random.shuffle(List)
 
+    num_train = len(List) * rate
     X_train = np.zeros(X.shape)
     X_test = np.zeros(X.shape)
-    random.shuffle(List)
-    for e, elem in enumerate(List):
-        i = elem[0]
-        j = elem[1]
-        if e < len(List) * rate:
+    for e, (i, j) in enumerate(List):
+        if e < num_train:
             X_train[i, j] = X[i, j]
         else:
             X_test[i, j] = X[i, j]
@@ -36,9 +36,10 @@ def make_sampling_matrix(X, rate):
     rateの意味は、本来観測できたであろう部分から、もっと差っ引きたかったら1より小さくすればいい
     """
     R = np.zeros(X.shape)
-    for i in range(X.shape[0]):
-        for j in range(X.shape[1]):
-            if random.random() < rate and X[i, j] == 0:
+    N, M = X.shape
+    for i in range(N):
+        for j in range(M):
+            if X[i, j] == 0 and random.random() < rate:
                 R[i, j] = 1.0
     return R
 
