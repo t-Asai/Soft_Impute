@@ -29,19 +29,21 @@ def split_to_test_and_train(X, rate):
     return X_train, X_test
 
 
-def make_sampling_matrix(X, rate):
+def make_sampling_matrix(X_test, X_train, rate):
     """
     観測行列を作成する関数
     テスト用にとっておいた部分は、観測できなかったことにする
     rateの意味は、本来観測できたであろう部分から、もっと差っ引きたかったら1より小さくすればいい
     """
-    R = np.zeros(X.shape)
-    N, M = X.shape
+    N, M = X_test.shape
+    R = np.zeros((N, M))
     for i in range(N):
         for j in range(M):
-            if X[i, j] == 0 and random.random() < rate:
+            if X_test[i, j] == 0 and random.random() < rate:
                 R[i, j] = 1.0
-    return R
+    Y = R * X_train
+    # Y += 0.01 * np.random.normal(0, 1, X0.shape)
+    return Y, R
 
 
 def make_target_matrix(N, rho):

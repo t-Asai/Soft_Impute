@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-from plot_dat import add_val
+from methods_graph import add_val
 
 
 def cal_total_error(X_k, X_train, X_test):
