@@ -4,6 +4,7 @@ from methods_matrix import to_square_matrix, to_low_rank_matrix
 import pandas as pd
 import numpy as np
 from collections import namedtuple
+from plot_dat import plot_val
 
 
 if __name__ == "__main__":
@@ -39,3 +40,7 @@ if __name__ == "__main__":
     Y = R * X_train
     # Y += 0.01 * np.random.normal(0, 1, X0.shape)
     X_k = warm_start(Y, R, X_train, X_test, Lambda_param, stop_condition)
+
+    plot_val('cal_total_error')
+    plot_val('cal_test_error')
+    plot_val('cal_terminal_condition')

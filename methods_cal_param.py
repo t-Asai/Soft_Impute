@@ -1,10 +1,13 @@
 import numpy as np
+import sys
+from plot_dat import add_val
 
 
 def cal_total_error(X_k, X_train, X_test):
     num = np.linalg.norm(X_k - X_train - X_test)
     den = np.linalg.norm(X_train)
     val = num / den
+    add_val(sys._getframe().f_code.co_name, val)
     return val
 
 
@@ -17,6 +20,7 @@ def cal_test_error(X_k, X_test):
                 num += pow(X_test[i, j] - X_k[i, j], 2.0)
     den = np.linalg.norm(X_test)
     val = np.sqrt(num) / den
+    add_val(sys._getframe().f_code.co_name, val)
     return val
 
 
@@ -24,4 +28,5 @@ def cal_terminal_condition(X_k, X_p):
     num = np.linalg.norm(X_k - X_p)
     den = np.linalg.norm(X_p)
     val = num / den if den > 0 else 0.0
+    add_val(sys._getframe().f_code.co_name, val)
     return val

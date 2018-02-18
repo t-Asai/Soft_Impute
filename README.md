@@ -15,3 +15,7 @@ make_matrix.py makes matrixes as input data.
 methods_algorithm.py is a code for soft impute algorithm.
 methods_cal_param.py calculate parameters such as error terminal condition and so on.
 methods_matrix.py contains manipulation functions such as to make matrix low rank.
+
+to use gnuplot
+$ brew cask install xquartz
+$ brew install gnuplot --with-aquaterm --with-x11
