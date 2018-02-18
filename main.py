@@ -1,4 +1,4 @@
-import pandas as pd
+# import pandas as pd
 from collections import namedtuple
 from methods_algorithm import warm_start
 from methods_graph import plot_val
@@ -21,32 +21,27 @@ if __name__ == "__main__":
     初期値作成
     """
     Mat.make_target_matrix()
-    Mat.split_to_test_and_train()
-    Mat.make_sampling_matrix()
+    # Mat.Original = pd.read_csv('data.csv')
 
     """
     評価用にデータを分ける
     """
-    X_train = Mat.Train
-    X_test = Mat.Test
-    Y = Mat.Observe
-    R = Mat.Cast
+    Mat.split_to_test_and_train()
 
     """
     再構成時に使用するデータをアンダーサンプリングする
     評価用に取り分けた部分は別枠で取り除くので、学習用のデータをさらに差っ引く場合にレートを下げる
     """
+    Mat.make_sampling_matrix()
 
     """
     アルゴリズムを実行する
     """
-    X_k = warm_start(Y, R, X_train, X_test, Lambda_param, stop_condition)
+    X_k = warm_start(Mat, Lambda_param, stop_condition)
 
     """
     描画する
     """
-    """
     plot_val('cal_total_error')
     plot_val('cal_test_error')
     plot_val('cal_terminal_condition')
-    """
