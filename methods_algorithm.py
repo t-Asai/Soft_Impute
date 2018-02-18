@@ -39,6 +39,7 @@ def warm_start(Mat, Lambda_param, stop_condition):
     """
     cal_total_error(flag='plot')
     cal_test_error(flag='plot')
+    cal_terminal_condition(flag='plot')
 
     return X_k
 

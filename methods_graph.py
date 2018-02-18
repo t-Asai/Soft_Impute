@@ -22,6 +22,9 @@ def plot_val(func_name):
     """
     グラフを描画する
     """
-    df = pd.read_csv(func_name + '.dat')
-    df.plot()
-    plt.savefig('{}.png'.format(func_name))
+    df = pd.read_csv(func_name + '.dat', header=None)
+    df.columns = ['']
+    ax = df.plot()
+    ax.set_xlabel('#step')
+    ax.set_ylabel(func_name.replace('cal_', ''))
+    plt.savefig('{}.eps'.format(func_name))
