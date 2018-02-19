@@ -31,10 +31,8 @@ def warm_start(Mat, Lambda_param, stop_condition):
         X_k = soft_impute(Y, R, X_k, Lambda, stop_condition)
         total_error = cal_total_error(X_k, X_Original)
         test_error = cal_test_error(X_k, X_test)
-        """
         print('Lambda: {:.3g}, total_error: {:.3g}, test_error: {:.3g}'.format(
             Lambda, total_error, test_error))
-        """
         if(Lambda == Lambda_param.end):
             break
         else:
