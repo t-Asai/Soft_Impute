@@ -58,7 +58,7 @@ class Matrix:
         self.Cast = np.zeros((self.N, self.M))
         for i in range(self.N):
             for j in range(self.M):
-                if self.Test[i, j] == 0 and random.random() < self.rate_sample:
+                if self.Test[i, j] == 0 and self.Train[i, j] != 0 and random.random() < self.rate_sample:
                     self.Cast[i, j] = 1.0
 
     def make_observed_matrix(self):
